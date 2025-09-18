@@ -13,4 +13,4 @@ This repository contains implementations of advanced **Data Structures and Algor
 ## 🚀 How to Use  
 1. Clone this repo:  
    ```bash
-   git clone https://github.com/<your-username>/dsa-advanced-topics.git
+   git clone https://github.com/SajidMohmand/dsa-advanced-topics.git
