@@ -71,7 +71,15 @@ public class GraphAlgorithms {
         ArrayList<Edge> graph[] = new ArrayList[v];
 
         createGraph(graph);
-        bfs(graph,new boolean[v],0);
+
+        boolean[] vis = new boolean[v];
+
+        // for disconnected component graph also
+        for (int i=0; i<vis.length; i++){
+            if (vis[i] == false){
+                bfs(graph,vis,i);
+            }
+        }
 
     }
 }
