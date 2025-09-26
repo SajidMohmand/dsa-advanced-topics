@@ -66,6 +66,40 @@ public class GraphAlgorithms {
         }
     }
 
+    // time complexity: O(V+E)
+    public static void dfs(ArrayList<Edge>[] graph, boolean[] vis,int x){
+        if (!vis[x]){
+            System.out.print(x+" ");
+            vis[x] = true;
+            for (int i=0; i<graph[x].size(); i++){
+                int val = graph[x].get(i).dest;
+                dfs(graph,vis,val);
+            }
+        }
+    }
+
+
+//    Questions
+
+    // 1:All path from source to target
+    // time complexity: O(V^V)
+    public static void allPathFromRange(ArrayList<Edge>[] graph,int curr,boolean[] vis,String path,int target){
+        if (curr == target){
+            path+=curr;
+            System.out.println(path);
+            return;
+        }
+
+        path += curr;
+        vis[curr] = true;
+        for (int i=0; i<graph[curr].size(); i++){
+            int val = graph[curr].get(i).dest;
+            if (!vis[val]){
+                allPathFromRange(graph,val,vis,path,target);
+                vis[val] = false;
+            }
+        }
+    }
     public static void main(String[] args) {
         int v = 7;
         ArrayList<Edge> graph[] = new ArrayList[v];
@@ -75,11 +109,14 @@ public class GraphAlgorithms {
         boolean[] vis = new boolean[v];
 
         // for disconnected component graph also
-        for (int i=0; i<vis.length; i++){
-            if (vis[i] == false){
-                bfs(graph,vis,i);
-            }
-        }
+//        for (int i=0; i<vis.length; i++){
+//            if (vis[i] == false){
+//                bfs(graph,vis,i);
+//            }
+//        }
+
+//        dfs(graph,new boolean[v],0);
+        allPathFromRange(graph,0,new boolean[v],"",5);
 
     }
 }
