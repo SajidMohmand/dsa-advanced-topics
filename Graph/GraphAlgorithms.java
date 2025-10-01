@@ -3,6 +3,7 @@ package Graph;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class GraphAlgorithms {
 
@@ -47,13 +48,21 @@ public class GraphAlgorithms {
 //        graph[6].add(new Edge(6,5));
 
         // directed graph
-        graph[0].add(new Edge(0,2));
+//        graph[0].add(new Edge(0,2));
+//
+//        graph[1].add(new Edge(1,0));
+//
+//        graph[2].add(new Edge(2,3));
+//
+//        graph[3].add(new Edge(3,0));
 
-        graph[1].add(new Edge(1,0));
 
         graph[2].add(new Edge(2,3));
-
-        graph[3].add(new Edge(3,0));
+        graph[3].add(new Edge(3,1));
+        graph[4].add(new Edge(4,0));
+        graph[4].add(new Edge(4,1));
+        graph[5].add(new Edge(5,0));
+        graph[5].add(new Edge(5,2));
 
 
     }
@@ -128,8 +137,44 @@ public class GraphAlgorithms {
         stackArr[curr] = false;
         return false;
     }
+
+
+    // 3:Topological Sorting
+    // time complexity: O(E+V)
+    public static void topSort(ArrayList<Edge>[] graph,boolean[] vis){
+
+        Stack<Integer> st = new Stack<>();
+
+        for (int i=0; i<vis.length; i++){
+            if (!vis[i]){
+                topologicalSorting(graph,vis,i,st);
+            }
+        }
+
+       while (!st.empty()){
+           System.out.print(st.pop()+" ");
+       }
+        System.out.println();
+
+    }
+    public static void topologicalSorting(ArrayList<Edge>[] graph, boolean[] vis, int curr, Stack<Integer> stack){
+
+        vis[curr] = true;
+        for (int i=0; i<graph[curr].size(); i++){
+
+            int val = graph[curr].get(i).dest;
+            if (!vis[val]) {
+                topologicalSorting(graph,vis,val,stack);
+            }
+        }
+        stack.push(curr);
+    }
+
+
+
+
     public static void main(String[] args) {
-        int v = 4;
+        int v = 6;
         ArrayList<Edge> graph[] = new ArrayList[v];
 
         createGraph(graph);
@@ -146,14 +191,19 @@ public class GraphAlgorithms {
 //        dfs(graph,new boolean[v],0);
 //        allPathFromRange(graph,0,new boolean[v],"0",5);
 
-        boolean[] stackArr = new boolean[v];
-        for (int i = 0; i < graph.length; i++) {
-            if (!vis[i]) {
-                if (cycleDetection(graph, vis, i, stackArr)) {
-                    System.out.println("Cycle found");
-                    break;
-                }
-            }
-        }
+//        boolean[] stackArr = new boolean[v];
+//        for (int i = 0; i < graph.length; i++) {
+//            if (!vis[i]) {
+//                if (cycleDetection(graph, vis, i, stackArr)) {
+//                    System.out.println("Cycle found");
+//                    break;
+//                }
+//            }
+//        }
+
+
+        topSort(graph,vis);
+
+
     }
 }
